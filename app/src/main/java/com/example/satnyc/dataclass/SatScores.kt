@@ -1,6 +1,6 @@
 package com.example.satnyc.dataclass
 
-data class satScores(
+data class SatScores(
     val dbn:String,
     val school_name:String,
     val num_of_sat_test_takers:String,

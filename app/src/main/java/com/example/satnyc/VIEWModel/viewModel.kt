@@ -4,23 +4,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.satnyc.Model.Repo
-import com.example.satnyc.dataclass.satScores
-import com.example.satnyc.dataclass.school
+import com.example.satnyc.dataclass.SatScores
+import com.example.satnyc.dataclass.School
+
 
 import kotlinx.coroutines.launch
 
 class schoolViewModel:ViewModel() {
 
-    val schoolViewModelScores = mutableStateOf<List<school>?>(null)
-    val satScoreViewModel= mutableStateOf<List<satScores>?>(null)
+    var schoolState = mutableStateOf<List<School>?>(null)
+    val satScoreState= mutableStateOf<List<SatScores>?>(null)
 
-    fun getSchoolScores(id:String) {
+    fun getSchools() {
         viewModelScope.launch {
-            val satScoreResponse = Repo().apiInterface.getSchoolData(id)
-            schoolViewModelScores.value=satScoreResponse
+            val schoolResponse = Repo().apiInterface.getSchoolData()
+            schoolState.value=schoolResponse
+        }
 
-            val satScoresMath=Repo().apiInterface.getSatScoreMathReading(id)
-            satScoreViewModel.value=satScoresMath
+    }
+
+    fun getSatScores(dbn:String){
+        viewModelScope.launch {
+            val satScores=Repo().apiInterface.getSatScore(dbn)
+            satScoreState.value=satScores
             println("satScoreViewModel.value")
         }
     }

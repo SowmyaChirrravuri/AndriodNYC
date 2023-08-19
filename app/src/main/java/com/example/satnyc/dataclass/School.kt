@@ -1,6 +1,6 @@
 package com.example.satnyc.dataclass
 
-data class school (
+data class School (
     val dbn:String,
     val school_name:String,
     val overview_paragraph:String,
