@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-const val BASE_URL="https://data.cityofnewyork.us/"
+const val BASE_URL = "https://data.cityofnewyork.us/"
+
 class Repo {
     val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
