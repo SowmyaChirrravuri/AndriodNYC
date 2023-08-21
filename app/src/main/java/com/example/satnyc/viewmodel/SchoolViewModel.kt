@@ -1,4 +1,4 @@
-package com.example.satnyc.VIEWModel
+package com.example.satnyc.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -11,7 +11,7 @@ import com.example.satnyc.dataclass.School
 
 import kotlinx.coroutines.launch
 
-class schoolViewModel : ViewModel() {
+class SchoolViewModel : ViewModel() {
 
     var schoolState = mutableStateOf<List<School>?>(null)
     val satScoreState= mutableStateOf<List<SatScores>?>(null)

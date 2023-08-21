@@ -6,7 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.satnyc.Pages.DETAIL_SCREEN
 import com.example.satnyc.Pages.HOME_SCREEN
-import com.example.satnyc.VIEWModel.schoolViewModel
+import com.example.satnyc.viewmodel.SchoolViewModel
+import com.example.satnyc.ui.screens.DetailScreen
+import com.example.satnyc.ui.screens.HomeScreen
 
 
 sealed class Screens (val route: String){
@@ -23,17 +25,22 @@ object Pages {
 
 }
 @Composable
-fun SetupNavHost(navController: NavHostController, viewModel: schoolViewModel) {
+fun SetupNavHost(navController: NavHostController, viewModel: SchoolViewModel) {
 
     NavHost(navController = navController, startDestination = Screens.Home.route) {
 
         composable(route = Screens.Home.route) {
             HomeScreen(viewModel = viewModel, navController = navController)
         }
+        val state = viewModel.satScoreState
 
-        composable(route = Screens.Detail.route + "/{dbn}") { backStackEntry ->
-            DetailScreen(dbn = backStackEntry.arguments?.getString("dbn")?: "1", viewModel = viewModel, navController = navController)
+        if(state.value?.isEmpty() == true) {
+            composable(route = Screens.Detail.route + "/{dbn}") { backStackEntry ->
+                DetailScreen(dbn = backStackEntry.arguments?.getString("dbn")?: "1", viewModel = viewModel, navController = navController)
+            }
         }
+
+
 
     }
 

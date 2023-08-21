@@ -1,8 +1,15 @@
-package com.example.satnyc.VIEW
+package com.example.satnyc.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -15,8 +22,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.satnyc.Screens
+import com.example.satnyc.viewmodel.SchoolViewModel
 import com.example.satnyc.dataclass.School
 
+@Composable
+fun HomeScreen(viewModel: SchoolViewModel, navController: NavController) {
+    viewModel.getSchools()
+    schoolsList(schoolList = viewModel.schoolState.value, navController = navController)
+}
+
+@Composable
+fun schoolsList(schoolList: List<School>?, navController: NavController) {
+    LazyColumn {
+        itemsIndexed(items = schoolList ?: emptyList()) { index, item ->
+            schoolItem(item, navController)
+        }
+    }
+}
 
 @Composable
 fun schoolItem(school: School, navController: NavController) {
@@ -80,4 +102,3 @@ fun schoolItem(school: School, navController: NavController) {
         }
     }
 }
-
