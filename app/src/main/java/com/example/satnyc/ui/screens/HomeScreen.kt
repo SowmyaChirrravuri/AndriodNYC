@@ -28,27 +28,28 @@ import com.example.satnyc.dataclass.School
 @Composable
 fun HomeScreen(viewModel: SchoolViewModel, navController: NavController) {
     viewModel.getSchools()
-    schoolsList(schoolList = viewModel.schoolState.value, navController = navController)
+    schoolsList(schoolList = viewModel.schoolState.value, navController = navController,viewModel)
 }
 
 @Composable
-fun schoolsList(schoolList: List<School>?, navController: NavController) {
+fun schoolsList(schoolList: List<School>?, navController: NavController,viewModel: SchoolViewModel) {
     LazyColumn {
         itemsIndexed(items = schoolList ?: emptyList()) { index, item ->
-            schoolItem(item, navController)
+            schoolItem(item, navController, viewModel)
         }
     }
 }
 
 @Composable
-fun schoolItem(school: School, navController: NavController) {
+fun schoolItem(school: School, navController: NavController,viewModel: SchoolViewModel) {
     Card(
         modifier = Modifier
             .padding(8.dp, 4.dp)
             .fillMaxWidth()
             .height(110.dp)
             .clickable {
-                navController.navigate(Screens.Detail.route + "/${school.dbn}")
+                viewModel.getSatScores(school.dbn)
+               // navController.navigate(Screens.Detail.route + "/${school.dbn}")
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 3.dp

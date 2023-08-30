@@ -17,8 +17,12 @@ import com.example.satnyc.viewmodel.SchoolViewModel
 import com.example.satnyc.dataclass.SatScores
 
 import com.example.satnyc.ui.theme.SatNycTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     private val viewModel by viewModels<SchoolViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
