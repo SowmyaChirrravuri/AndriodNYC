@@ -23,16 +23,37 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.satnyc.Screens
 import com.example.satnyc.viewmodel.SchoolViewModel
-import com.example.satnyc.dataclass.School
+import com.example.satnyc.data.School
 
 @Composable
 fun HomeScreen(viewModel: SchoolViewModel, navController: NavController) {
     viewModel.getSchools()
-    schoolsList(schoolList = viewModel.schoolState.value, navController = navController,viewModel)
+
+    when (val schoolState = viewModel.schoolState.value) {
+        is SchoolViewModel.ViewState.Loading -> {
+            Text(text = "Loading...")
+        }
+
+        is SchoolViewModel.ViewState.Success<List<School>> -> {
+            schoolsList(
+                schoolList = schoolState.data,
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+
+        is SchoolViewModel.ViewState.Error -> {
+            Text(text = "Error: ${schoolState.message}")
+        }
+    }
 }
 
 @Composable
-fun schoolsList(schoolList: List<School>?, navController: NavController,viewModel: SchoolViewModel) {
+fun schoolsList(
+    schoolList: List<School>?,
+    navController: NavController,
+    viewModel: SchoolViewModel
+) {
     LazyColumn {
         itemsIndexed(items = schoolList ?: emptyList()) { index, item ->
             schoolItem(item, navController, viewModel)
@@ -41,15 +62,14 @@ fun schoolsList(schoolList: List<School>?, navController: NavController,viewMode
 }
 
 @Composable
-fun schoolItem(school: School, navController: NavController,viewModel: SchoolViewModel) {
+fun schoolItem(school: School, navController: NavController, viewModel: SchoolViewModel) {
     Card(
         modifier = Modifier
             .padding(8.dp, 4.dp)
             .fillMaxWidth()
             .height(110.dp)
             .clickable {
-                viewModel.getSatScores(school.dbn)
-               // navController.navigate(Screens.Detail.route + "/${school.dbn}")
+                navController.navigate(Screens.Detail.route + "/${school.dbn}")
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 3.dp

@@ -1,7 +1,7 @@
-package com.example.satnyc.Model
+package com.example.satnyc.repo
 
-import com.example.satnyc.dataclass.SatScores
-import com.example.satnyc.dataclass.School
+import com.example.satnyc.data.SatScores
+import com.example.satnyc.data.School
 
 interface DataRepository {
     suspend fun getSchoolData(): List<School>

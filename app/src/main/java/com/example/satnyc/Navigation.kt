@@ -11,19 +11,16 @@ import com.example.satnyc.ui.screens.DetailScreen
 import com.example.satnyc.ui.screens.HomeScreen
 
 
-sealed class Screens (val route: String){
-
-    object Home: Screens(route = HOME_SCREEN)
-    object Detail: Screens(route = DETAIL_SCREEN)
-
+sealed class Screens(val route: String) {
+    object Home : Screens(route = HOME_SCREEN)
+    object Detail : Screens(route = DETAIL_SCREEN)
 }
 
 object Pages {
-
     const val HOME_SCREEN = "home_screen"
     const val DETAIL_SCREEN = "detail_screen"
-
 }
+
 @Composable
 fun SetupNavHost(navController: NavHostController, viewModel: SchoolViewModel) {
 
@@ -32,15 +29,14 @@ fun SetupNavHost(navController: NavHostController, viewModel: SchoolViewModel) {
         composable(route = Screens.Home.route) {
             HomeScreen(viewModel = viewModel, navController = navController)
         }
-        val state = viewModel.satScoreState
 
-        if(state.value?.isEmpty() == true) {
-            composable(route = Screens.Detail.route + "/{dbn}") { backStackEntry ->
-                DetailScreen(dbn = backStackEntry.arguments?.getString("dbn")?: "1", viewModel = viewModel, navController = navController)
-            }
+        composable(route = Screens.Detail.route + "/{dbn}") { backStackEntry ->
+            DetailScreen(
+                dbn = backStackEntry.arguments?.getString("dbn") ?: "1",
+                viewModel = viewModel,
+                navController = navController
+            )
         }
-
-
 
     }
 

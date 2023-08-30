@@ -1,7 +1,6 @@
 package com.example.satnyc.di
 
-import com.example.satnyc.Model.ApiInterface
-import com.example.satnyc.Model.BASE_URL
+import com.example.satnyc.repo.ApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,9 +11,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+const val BASE_URL = "https://data.cityofnewyork.us/"
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object NetworkModule {
 
     @Provides
     @Singleton

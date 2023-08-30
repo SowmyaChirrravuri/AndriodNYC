@@ -1,4 +1,4 @@
-package com.example.satnyc.dataclass
+package com.example.satnyc.data
 
 data class SatScores(
     val dbn: String,
